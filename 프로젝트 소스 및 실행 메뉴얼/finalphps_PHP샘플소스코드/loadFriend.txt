@@ -1,0 +1,60 @@
+<?php
+
+$mysql_host = "unity3d-mysqlserver.mysql.database.azure.com";
+$mysql_username = "Unity3DProject@unity3d-mysqlserver";
+$mysql_pass = "A8573330*";
+$mysql_database = "unity3d_db";
+
+$setCustomerId = $_POST["customerId_input"];
+
+
+
+$conn = new mysqli($mysql_host, $mysql_username, $mysql_pass, $mysql_database);
+
+$sql = "SELECT friendId FROM friend WHERE customerId = '".$setCustomerId."'";
+
+
+$result = $conn->query($sql);
+
+$response = array();
+$friends = array();
+
+if($result->num_rows>0)
+{
+	
+	
+	while($row = $result->fetch_assoc())
+	{
+		$friendId = $row['friendId'];
+		
+		$sqlsec = "SELECT customerId, customerName FROM customer WHERE customerId = '".$friendId."'";
+		$resultTwo = $conn->query($sqlsec);
+		
+		if($resultTwo->num_rows>0)
+		{
+			while($rowTwo = $resultTwo->fetch_assoc())
+			{
+				$friends[] = array('friendId'=>$friendId,'friendName'=>$rowTwo['customerName']);
+			}
+		}
+	}
+	
+	$response['friends'] = $friends;
+	
+	$fp = fopen("friendListData.php", 'w');
+	fwrite($fp, json_encode($response, JSON_UNESCAPED_UNICODE));
+	fclose($fp);
+	
+	$echodata = "Success To Load FriendList";
+
+}
+else
+{
+	$echodate = "fail!";
+}
+
+echo $echodata;
+
+$conn->close();
+
+?>

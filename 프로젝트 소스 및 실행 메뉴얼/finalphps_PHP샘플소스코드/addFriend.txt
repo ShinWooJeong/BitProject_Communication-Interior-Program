@@ -1,0 +1,37 @@
+<?php
+
+$mysql_host = "unity3d-mysqlserver.mysql.database.azure.com";
+$mysql_username = "Unity3DProject@unity3d-mysqlserver";
+$mysql_pass = "A8573330*";
+$mysql_database = "unity3d_db";
+
+$setId = $_POST["customerId_input"];
+$setFriendId = $_POST["friendId_input"];
+
+
+$conn = new mysqli($mysql_host, $mysql_username, $mysql_pass, $mysql_database);
+
+
+$sql = "INSERT INTO friend (customerId,friendId) VALUES ('".$setId."','".$setFriendId."')";
+
+
+
+$result = $conn->query($sql);
+
+if($result)
+{
+
+		$echodata = "Add success!";
+}
+else
+{
+	$echodata = "fail, try again!";
+}
+
+echo $echodata;
+
+
+
+$conn->close();
+
+?>

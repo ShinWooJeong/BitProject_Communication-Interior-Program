@@ -1,0 +1,47 @@
+<?php
+$mysql_host = "unity3d-mysqlserver.mysql.database.azure.com";
+$mysql_username = "Unity3DProject@unity3d-mysqlserver";
+$mysql_pass = "A8573330*";
+$mysql_database = "unity3d_db";
+
+$echodata = "";
+$setId = $_POST["id_inputdata"];
+$setPass = $_POST["pass_inputdata"];
+
+$conn = new mysqli($mysql_host, $mysql_username, $mysql_pass, $mysql_database);
+
+
+$sql = "SELECT customerName FROM customer WHERE customerId ='".$setId."'"."AND password ='".$setPass."'";
+
+
+
+$result = $conn->query($sql);
+
+if($result->num_rows>0)
+{
+	while($row = $result->fetch_assoc())
+	{
+		$name = $row['customerName'];
+
+	
+		
+	}
+
+	
+	$echodata = $name;
+
+}
+else
+{
+	$echodata = "Failed Login";
+}
+
+
+
+echo $echodata;
+
+
+
+$conn->close();
+
+?>

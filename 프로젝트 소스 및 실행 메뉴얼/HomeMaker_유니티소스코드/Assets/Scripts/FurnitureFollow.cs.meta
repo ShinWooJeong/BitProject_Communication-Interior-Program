@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 6ef0d88534237fd40a2fc02861d522bc
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - funitureObj: {fileID: 1089238821015788, guid: ebe7ced0a946d7d4dbaaaeb279039e77,
+      type: 2}
+  - funitureTrans: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

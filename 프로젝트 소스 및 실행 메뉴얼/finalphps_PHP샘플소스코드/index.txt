@@ -1,0 +1,58 @@
+<?php
+
+$mysql_host = "unity3d-mysqlserver.mysql.database.azure.com";
+$mysql_username = "Unity3DProject@unity3d-mysqlserver";
+$mysql_pass = "A8573330*";
+$mysql_database = "unity3d_db";
+
+$conn = new mysqli($mysql_host, $mysql_username, $mysql_pass, $mysql_database);
+
+
+$sql = "SELECT furnitureName, furnitureType, furnitureCompany, furnitureDescription, furniturePrice FROM furniture";
+
+
+
+$result = $conn->query($sql);
+
+$response = array();
+$furnitures = array();
+
+if($result->num_rows > 0)
+{
+
+		while($row=$result->fetch_assoc())
+		{
+			$name = $row['furnitureName'];
+			$type = $row['furnitureType'];
+			$company = $row['furnitureCompany'];
+			$desc = $row['furnitureDescription'];
+			$price = $row['furniturePrice'];
+			
+		$furnitures[] = array('name'=>$name,'type'=>$type,'company'=>$company,'desc'=>$desc,'price'=>$price);
+			
+		}
+		
+		$response['furnitures'] = $furnitures;
+		
+		$fp = fopen("data.php", 'w');
+		fwrite($fp, json_encode($response, JSON_UNESCAPED_UNICODE));
+		fclose($fp);
+	
+		$echodata = "Success To Save Json!";
+		
+}
+else
+{
+	$echodata = "fail, try again!";
+}
+
+echo $echodata;
+
+
+
+$conn->close();
+
+
+
+
+?>

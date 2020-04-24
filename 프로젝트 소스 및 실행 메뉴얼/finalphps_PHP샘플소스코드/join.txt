@@ -1,0 +1,41 @@
+<?php
+$mysql_host = "unity3d-mysqlserver.mysql.database.azure.com";
+$mysql_username = "Unity3DProject@unity3d-mysqlserver";
+$mysql_pass = "A8573330*";
+$mysql_database = "unity3d_db";
+
+$echodata = "";
+$setId = $_POST["id_inputdata"];
+$setPass = $_POST["pass_inputdata"];
+$setName = $_POST["name_inputdata"];
+$setPhone = $_POST["phone_inputdata"];
+$setEmail = $_POST["email_inputdata"];
+$setAddr = $_POST["addr_inputdata"];
+
+
+$conn = new mysqli($mysql_host, $mysql_username, $mysql_pass, $mysql_database);
+
+
+$sql = "INSERT INTO customer (customerId,password,customerName, phoneNumber,email, adress) VALUES ('".$setId."','".$setPass."','".$setName."','".$setPhone."','".$setEmail."','".$setAddr."')";
+
+
+
+$result = $conn->query($sql);
+
+if($result)
+{
+
+		$echodata = "now you are the member of HomeMaker!";
+}
+else
+{
+	$echodata = "fail, try again!";
+}
+
+echo $echodata;
+
+
+
+$conn->close();
+
+?>

@@ -1,0 +1,60 @@
+<?php
+
+$mysql_host = "unity3d-mysqlserver.mysql.database.azure.com";
+$mysql_username = "Unity3DProject@unity3d-mysqlserver";
+$mysql_pass = "A8573330*";
+$mysql_database = "unity3d_db";
+
+$echodata = "";
+
+
+$jsonArrayData = $_POST["jsonArrayData"];
+
+$fp = fopen("furnitureSavedData.php", 'w');
+fwrite($fp, $jsonArrayData);
+fclose($fp);
+
+$echodata = "Success To Save Json!";
+		
+$url = 'furnitureSavedData.php';
+$data = file_get_contents($url);
+$jsonData = json_decode($data, true);
+
+
+$count = count($jsonData['savedFurnitures']);
+
+
+$conn = new mysqli($mysql_host, $mysql_username, $mysql_pass, $mysql_database);
+
+for($i = 0; $i < $count; $i++)
+{
+	
+
+	$sql = "INSERT INTO saved_furniture (customerId,roomNumber,furnitureName, positionX,positionY, positionZ, rotateX, rotateY, rotateZ) VALUES ('"
+	.$jsonData['savedFurnitures'][$i]['customerId']."','".$jsonData['savedFurnitures'][$i]['roomNumber']."','".$jsonData['savedFurnitures'][$i]['furnitureName']."','"
+	.$jsonData['savedFurnitures'][$i]['positionX']."','".$jsonData['savedFurnitures'][$i]['positionY']."','".$jsonData['savedFurnitures'][$i]['positionZ']."','"
+	.$jsonData['savedFurnitures'][$i]['rotationX']."','".$jsonData['savedFurnitures'][$i]['rotationY']."','".$jsonData['savedFurnitures'][$i]['rotationZ']."')";
+
+	$result = $conn->query($sql);
+	
+
+
+}
+
+
+
+if($result)
+{
+
+		$echodata = "success to save data in DB";
+}
+else
+{
+	$echodata = "fail : ";
+}
+
+
+echo $echodata;
+
+$conn->close();
+?>
